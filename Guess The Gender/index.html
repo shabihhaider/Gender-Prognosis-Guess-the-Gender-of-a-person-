@@ -21,13 +21,13 @@
 
   </head>
   <body>
-    
+
     <div class="container-fluid">
         <div class="row justify-content-center mt-4">
             <div class="col-md-11">
                 <nav id="links">
-                    <a href="#home">Home</a>
-                    <a href="/assets/html/history.html">History</a>
+                    <a href="index.html">Home</a>
+                    <a href="history.html">History</a>
                 </nav>
             </div>
             <div class="col-md-10 text-center mt-5">
@@ -61,3 +61,45 @@
 
   </body>
 </html>
+
+<!-- Few Issues
+
+1. Responsive issue: https://share.cleanshot.com/8c6QgMXzvFdy2Xyy75cb
+2. Design is not appealing. Especially the red background.
+3. Submit button (on homepage) hover effect is not good/appealing.
+4. I adjusted history.html location and code. (See changes/commit).
+5. I adjusted code in index.html (see commit).
+6. I added few @todo in the script.js (see script.js or commit).
+
+-->
+
+<!-- Next Tasks
+
+On the history page:
+1. add remove functionality. (User can remove any one record or all record at once).
+2. Add print option. User can print any one record as PDF file and/or download all the records.
+3. Use datatables https://datatables.net/. So, user can search record easily. See example: https://datatables.net/examples/basic_init/zero_configuration.html
+4. This is only accessible if user is logged in. If user is not logged in then redirect them to login page. And once login then again redirect to history page (Only if they requested for the history page).
+
+
+Add new menu item for Login.
+
+Login Page:
+1. Create a login page. For now, we will use static (hardcoded) credentials as follows: Username: alishan Password: @ali12345
+2. if user is on the login page then they can see the login page. If they provided wrong credentials then display error message. As shown in the following screenshot https://share.cleanshot.com/drh4qwjGBvqZCBq7zPbd
+Ref URL: https://getbootstrap.com/docs/5.3/forms/validation/
+3. Once they provided the correct credentials then add the flag in the local storage that user is logged in.
+4. If user is logged in then remove the 10 minutes wait. (This mean the logged in user can use without any limit).
+
+
+Logout functionality:
+1. We mostly don't need to create the logout page. As it's just the functionality.
+2. So, when user click on Logout button (Available in the menu - ONLY if user is logged in). Then remove the local storage flag (that is set for the login)
+
+Notes:
+1. Please note that normally, if user go to login page and login then redirect them to homepage and remove the Login menu link.
+2. When user is logged in then display the logout button.
+3. If user is not logged in and click on history. Then redirect them to login page. And once logged in then re-redirect them to the history (instead of homepage).
+
+
+-->

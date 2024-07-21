@@ -1,7 +1,7 @@
 let limit = 0;
         const countLimit = 3;
         const coolDownTime = 10 * 60 * 1000; //10 mins in milliseconds
-        
+
         //Variables to store data
         let fullName = "";
         let gender = "";
@@ -10,9 +10,11 @@ let limit = 0;
 
         function performSearch() {
 
+            // @todo: you should get the flag from local storage for the limit.
+
             if (limit < countLimit) {
                 limit++;
-                
+
                     let popup = document.querySelector(".popup");
                     let overlay = document.querySelector(".overlay");
 
@@ -26,7 +28,7 @@ let limit = 0;
                             </div>
                             <p>Please enter a name.</p>`);
                         overlay.classList.add("overlay-active");
-                        popup.classList.add("popup-active"); 
+                        popup.classList.add("popup-active");
                         return;
                     }
                     $.ajax({
@@ -39,6 +41,9 @@ let limit = 0;
                                     gender = data.gender;
                                     count = data.count;
                                     probability = data.probability;
+
+                                    // @todo: You should check if gender is null or empty (based on the API response), then display error.
+                                    // Example: Enter "testnamenamename" as name and you will see gender is null in API response. Screenshot https://share.cleanshot.com/CnDMrB9BJ4CYklmJXfnj
 
                                     $(".popup").html(`
                                         <div class="icons">
@@ -63,21 +68,21 @@ let limit = 0;
                                             </p>
                                         </div>
                                         `);
-                                    
+
                                     // Store data in LocalStorage
                                     setItem(fullName, gender, count, probability);
                                 }
                                 else {
                                     $(".popup").html(`<span>Gender could not recognize</span>`);
                                 }
-                                
+
                                 overlay.classList.add("overlay-active");
                                 popup.classList.add("popup-active");
                             },
                             error: function(xhr) {
                                 alert("Status: " + xhr.status + "  " + xhr.statusText);
                             }
-                        
+
                         });
             } else {
                 alert(`Search limit reached. Now wait for 10 minutes.`);
@@ -101,6 +106,9 @@ let limit = 0;
 
                 // Save the updated array back to LocalStorage
                 localStorage.setItem('users', JSON.stringify(users));
+
+                // @todo: you should save a flag that has the time. So, you can check if 10 minutes passed or not.
+                // And base on that flag user can performSearch or not.
 
             } else {
                 alert(`Data didn't added to LocalStorage`);
@@ -130,22 +138,22 @@ let limit = 0;
             function showInHistory() {
                 const users = JSON.parse(localStorage.getItem('users'));
                 const tbody = document.querySelector(".table tbody");
-    
-                
+
+
                 if (users && users.length > 0) {
-                    
+
                     users.forEach((user, index) => {
-                        
+
                         const row = document.createElement("tr");
-    
+
                         const indexCell = document.createElement("td");
                         indexCell.textContent = index + 1;
                         row.appendChild(indexCell);
-                        
+
                         const nameCell = document.createElement("td");
                         nameCell.textContent = user.fullName;
                         row.appendChild(nameCell);
-                        
+
                         const genderCell = document.createElement("td");
                         genderCell.textContent = user.gender;
                         row.appendChild(genderCell);
@@ -157,7 +165,7 @@ let limit = 0;
                         const probabilityCell = document.createElement("td");
                         probabilityCell.textContent = user.probability;
                         row.appendChild(probabilityCell);
-    
+
                         tbody.append(row);
                     });
                 }
@@ -167,7 +175,7 @@ let limit = 0;
                     </tr>`;
                 }
             }
-            
+
             document.addEventListener("DOMContentLoaded", function(){
                 showInHistory();
             });
