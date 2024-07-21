@@ -1,7 +1,7 @@
 # Guess the Gender of a Person
 
-You can use it simply enter the name of any person <br>
-and you will get the result in following: <br>
+You can use it to enter the name of any person <br>
+and you will get the result in the following: <br>
 
 <ul>
     <li>Name</li>
@@ -19,4 +19,4 @@ This website is made by using: <br>
     <li>Bootstrap</li>
 </ul>
 
-This is a responsive website and you can use it in every device.
+This is a responsive website and you can use it on every device.
