@@ -35,7 +35,7 @@ body {
 span {
     color:#bc6c25;
     font-size: xx-large;
-    font-family: "Dancing Script", cursive;
+    font-family: "Dancing Script";
 }
 
 h1 {
@@ -116,6 +116,10 @@ label {
 }
 
 /* History */
+.table {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
 tr {
     text-align: center;
 }
