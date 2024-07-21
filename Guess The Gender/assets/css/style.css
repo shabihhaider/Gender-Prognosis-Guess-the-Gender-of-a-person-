@@ -1,7 +1,7 @@
 body {
     margin: 0;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    background-color: #c1121f;
+    background-color: #fefae0;
     overflow-x: hidden;
 }
 
@@ -14,7 +14,7 @@ body {
 #links a {
     padding: 10px;
     text-decoration: none;
-    color: #669bbc;
+    color: #283618;
     background-color: white;
     border-radius: 10px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
@@ -22,30 +22,29 @@ body {
 }
 
 #links a:hover {
-    background-color: #669bbc;
+    background-color: #283618;
     color: white;
     transform: scale(1.2);
 } 
 
 .container-fluid {
-    background-color: #c1121f;
     padding: 20px;
     height: 100vh;
 }
 
 span {
-    color:#fdf0d5;
+    color:#bc6c25;
     font-size: xx-large;
     font-family: "Dancing Script", cursive;
 }
 
 h1 {
     font-size: 50px;
-    color: #669bbc;
+    color: #283618;
 }
 
 label {
-    color: #fdf0d5;
+    color: #283618;
 }
 
 .popup {
@@ -103,7 +102,7 @@ label {
 }
 
 .btn {
-    background-color: #003049;
+    background-color: #283618;
     border: none;
     font-size: 1.1rem;
     color: #fdf0d5;
@@ -111,8 +110,8 @@ label {
 }
 
 .btn:hover {
-    background-color: #669bbc;
-    color: #c1121f;
+    background-color: #bc6c25;
+    color: white;
     transform: scale(1.1);
 }
 
