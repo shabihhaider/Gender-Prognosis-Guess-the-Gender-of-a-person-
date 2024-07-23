@@ -32,7 +32,7 @@ body {
     height: 100vh;
 }
 
-span {
+h1 span {
     color:#bc6c25;
     font-size: xx-large;
     font-family: "Dancing Script";
@@ -45,6 +45,12 @@ h1 {
 
 label {
     color: #283618;
+}
+
+#home form input {
+    border: none;
+    border-radius: 10px;
+    padding: 1rem;
 }
 
 .popup {

@@ -109,6 +109,17 @@ let limit = 0;
 
                 // @todo: you should save a flag that has the time. So, you can check if 10 minutes passed or not.
                 // And base on that flag user can performSearch or not.
+                // Example: You can save the flag in LocalStorage with a key "searchTime" and value as current time in milliseconds.
+                // Example: localStorage.setItem("searchTime", new Date().getTime());
+
+                let searchTime = new Date().getTime() == (10 * 60 * 1000); // new is a keyword to create an object of Date class and getTime() is a method to get the current time in milliseconds
+                console.log(localStorage.setItem("searchTime", searchTime));
+
+                if (searchTime) {
+                    limit = 0;
+                    alert(`Search limit reset. You can search again.`);
+                    resetSearchCount();
+                }
 
             } else {
                 alert(`Data didn't added to LocalStorage`);

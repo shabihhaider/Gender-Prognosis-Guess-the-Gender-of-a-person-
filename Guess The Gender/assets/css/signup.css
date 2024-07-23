@@ -1,0 +1,179 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #fefae0;
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+
+#links {
+    display: flex;
+    justify-content: space-between;  
+    align-items: center;  
+}
+
+#links a {
+    padding: 10px;
+    text-decoration: none;
+    color: #283618;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    transition: 0.3s;
+}
+
+#links a:hover {
+    background-color: #283618;
+    color: white;
+    transform: scale(1.2);
+}
+
+.container-fluid {
+    height: 100vh;
+}
+
+/* Signup */
+
+.wrapper {
+    font-family: "Poppins", sans-serif;
+    text-align: center;
+    background-color: transparent;
+    height: 73vh;
+    width: 50vw;
+    margin: 30px auto;
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.wrapper h2 {
+    font: inherit;
+    font-size: 2rem;
+    font-weight: 900;
+    text-transform: uppercase;
+}
+
+.wrapper form {
+    min-width: 95%;
+    margin-top: 20px;
+    margin-bottom: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.wrapper form div {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.wrapper form label {
+    background-color: #283618;
+    color: #fdf0d5;
+    height: 50px;
+    width: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px 0 0 10px;
+    font-size: 1.5rem;
+}
+
+.wrapper form label span {
+    color: white;
+}
+
+.wrapper form input {
+    height: 50px;
+    padding: 1rem;
+    border-radius: 0 10px 10px 0;
+    background-color: #fafffa;
+    border: 2px solid #f8f8f8;
+    border-left: none;
+    width: 80%;
+    transition: 0.3s;
+}
+
+.wrapper form input:hover {
+    border-color: #283618;
+}
+
+.wrapper form input:focus {
+    outline: none;
+    border-color: #3c6908;
+}
+
+.wrapper form div:has(input:focus) label {
+    background-color: #3c6908;
+}
+
+.wrapper form button {
+    margin-top: 15px;
+    margin-bottom: 0;
+    border: none;
+    border-radius: 1000px;
+    text-transform: uppercase;
+    background-color: #283618;
+    color: white;
+    padding: 20px 50px;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.wrapper form button:hover {
+    background-color: #3c6908;
+    transform: scale(1.1);
+}
+
+.wrapper p {
+    margin-top: -25px;
+    margin-bottom: 0;
+}
+.wrapper p a {
+    text-decoration: none;
+    color: #3c6908;
+    font: inherit;
+    font-weight: 500;
+}
+
+/* Responsiveness */
+
+@media (max-width: 768px) {
+    .wrapper {
+        width: 80vw;
+    }
+}
+
+@media (max-width: 576px) {
+    .wrapper {
+        width: 90vw;
+    }
+}
+
+@media (max-width: 1024px){
+    .wrapper {
+        height: 80vh;
+        width: 90vw;
+    }
+}
+
+form div.incorrect label {
+    background-color: #f06272;
+}
+
+form div.incorrect input {
+    border-color: #f06272;
+}
+
+#error-message {
+    color: #f06272;
+    margin: 5px;
+}
+
