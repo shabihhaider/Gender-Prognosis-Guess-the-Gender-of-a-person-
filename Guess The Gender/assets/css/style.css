@@ -129,3 +129,10 @@ label {
 tr {
     text-align: center;
 }
+
+#delete-all {
+    background: none;
+    border: none;
+    color: white;
+    font: inherit;
+}
