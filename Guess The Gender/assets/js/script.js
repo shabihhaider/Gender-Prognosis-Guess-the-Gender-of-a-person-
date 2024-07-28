@@ -81,6 +81,9 @@ function performSearch() {
     },
     error: function (xhr) {
       alert("Status: " + xhr.status + "  " + xhr.statusText);
+      $(".popup").html(`<span>Failed to fetch data. Please try again later.</span>`);
+      overlay.classList.add("overlay-active");
+      popup.classList.add("popup-active");
     },
   });
 }
@@ -122,20 +125,85 @@ function resetSearchCount() {
   $("#name").prop("disabled", false);
 }
 
+// Function to show history
+function showInHistory() {
+  console.log("showInHistory called");
+
+  const users = JSON.parse(localStorage.getItem("users")) || [];
+  console.log(users);
+  const tbody = document.querySelector(".table tbody");
+
+  if (users && users.length > 0) {
+    console.log("showInHistory called");
+    users.forEach((user, index) => {
+      const row = document.createElement("tr");
+
+      const indexCell = document.createElement("td");
+      indexCell.textContent = index + 1;
+      row.appendChild(indexCell);
+
+      const nameCell = document.createElement("td");
+      nameCell.textContent = user.fullName;
+      row.appendChild(nameCell);
+
+      const genderCell = document.createElement("td");
+      genderCell.textContent = user.gender;
+      row.appendChild(genderCell);
+
+      const countCell = document.createElement("td");
+      countCell.textContent = user.count;
+      row.appendChild(countCell);
+
+      const probabilityCell = document.createElement("td");
+      probabilityCell.textContent = user.probability;
+      row.appendChild(probabilityCell);
+
+      tbody.append(row);
+    });
+  } else {
+    console.log("showInHistory called");
+    tbody.innerHTML = `<tr>
+        <td colspan='6'>No users found</td>
+        </tr>`;
+  }
+}
+
+function handleUserLogin() {
+  const userLogIn = localStorage.getItem("userLoggedIn") === "true";
+  if (userLogIn) {
+    showInHistory();
+  } else {
+    // Redirect to login page or handle accordingly
+    const tbody = document.querySelector(".table tbody");
+    tbody.innerHTML = `<tr>
+    <td colspan='6'>Please LogIn to View History. <button>Click Here</button></td></tr>`;
+
+    $(".table tbody tr button").on("click", function () {
+      window.location.href = "login.html";
+    });
+  }
+}
+
+
 // Start the script
 $(document).ready(function () {
-  let isuserLoggedIn = localStorage.getItem("userLoggedIn");
+  userLoggedIn = localStorage.getItem("userLoggedIn") === "true";
+
   $("#genderPredictionForm").on("submit", function (e) {
     e.preventDefault();
 
-    console.log(`user logged in Check: ${isuserLoggedIn}`);
+    console.log(`user logged in Check: ${userLoggedIn}`);
 
-    if (isuserLoggedIn) {
+    if (userLoggedIn) {
+
+      //User is logged in
       console.log(`User is logged in`);
 
       //Perform Search without any limit
       performSearch();
     } else {
+      
+      //User is not logged in
       console.log(`User is not logged in And Limit is: ${limit}`);
 
       //Perform Search with limit
@@ -158,10 +226,14 @@ $(document).ready(function () {
     $(".popup").removeClass("popup-active");
     $(this).removeClass("overlay-active");
   });
+
+  // Call handleUserLogin to check user login status and display history
+  handleUserLogin();
 });
 
+
 //When user click on this then remove all rows (localStorage clear)
-//deleteAll.addEventListener("click", clearStorage());
+//deleteAll.addEventListener("click", clearStorage);
 
 function clearStorage() {
   localStorage.removeItem("users");
@@ -240,12 +312,18 @@ form.addEventListener("submit", (e) => {
       );
 
       if (user) {
+
+        if (localStorage.getItem("userLoggedIn") === "true") {
+          addLogoutButton();
+        }
+
         // If user logs in, store flag in localStorage
         localStorage.setItem("userLoggedIn", true);
         userLoggedIn = true;
 
         // Redirect user to home page
         window.location.href = "index.html";
+
       } else {
         errors.push("User does not exist. Please sign up.");
         errorMessage.innerText = errors.join(". ");
@@ -324,6 +402,7 @@ allInputs.forEach((input) => {
   });
 });
 
+
 // Function to handle 10 mins wait period
 function remove10MinsOrNot(isuserLoggedIn) {
   if (isuserLoggedIn) {
@@ -333,40 +412,22 @@ function remove10MinsOrNot(isuserLoggedIn) {
   }
 }
 
-// Function to show history
-function showInHistory() {
-  const users = JSON.parse(localStorage.getItem("users"));
-  const tbody = document.querySelector(".table tbody");
+function addLogoutButton() {
+  const nav = document.querySelector("nav");
+  let logout = document.querySelector("#logout");
 
-  if (users && users.length > 0) {
-    users.forEach((user, index) => {
-      const row = document.createElement("tr");
+  if (!logout) {
+    logout = document.createElement("a");
+    logout.href = "#";
+    logout.id = "logout";
+    logout.textContent = "Logout";
+    nav.appendChild(logout);
 
-      const indexCell = document.createElement("td");
-      indexCell.textContent = index + 1;
-      row.appendChild(indexCell);
-
-      const nameCell = document.createElement("td");
-      nameCell.textContent = user.fullName;
-      row.appendChild(nameCell);
-
-      const genderCell = document.createElement("td");
-      genderCell.textContent = user.gender;
-      row.appendChild(genderCell);
-
-      const countCell = document.createElement("td");
-      countCell.textContent = user.count;
-      row.appendChild(countCell);
-
-      const probabilityCell = document.createElement("td");
-      probabilityCell.textContent = user.probability;
-      row.appendChild(probabilityCell);
-
-      tbody.append(row);
+    logout.addEventListener("click", function (e) {
+      e.preventDefault();
+      localStorage.removeItem("userLoggedIn");
+      userLoggedIn = false;
+      window.location.href = "login.html";
     });
-  } else {
-    tbody.innerHTML = `<tr>
-        <td colspan='6'>No users found</td>
-        </tr>`;
   }
 }

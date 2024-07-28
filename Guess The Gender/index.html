@@ -27,8 +27,8 @@
             <div class="col-md-11">
                 <nav id="links">
                     <a href="index.html">Home</a>
-                    <a id="history" href="history.html">History</a>
-                    <a href="signup.html">SignUp</a>
+                    <a class="history" href="history.html">History</a>
+                    <a href="login.html">LogIn</a>
                 </nav>
             </div>
             <div class="col-md-10 text-center mt-5">
@@ -66,7 +66,7 @@
 
 1. Responsive issue: https://share.cleanshot.com/8c6QgMXzvFdy2Xyy75cb
 2. Design is not appealing. Especially the red background.
-3. Submit button (on homepage) hover effect is not good/appealing.
+3. Submit button (on homepage) hover effect is not good/appealing.z
 4. I adjusted history.html location and code. (See changes/commit).
 5. I adjusted code in index.html (see commit).
 6. I added few @todo in the script.js (see script.js or commit).
@@ -89,7 +89,7 @@ Login Page:
 2. if user is on the login page then they can see the login page. If they provided wrong credentials then display error message. As shown in the following screenshot https://share.cleanshot.com/drh4qwjGBvqZCBq7zPbd
 Ref URL: https://getbootstrap.com/docs/5.3/forms/validation/    (Done)
 3. Once they provided the correct credentials then add the flag in the local storage that user is logged in. (Done)
-4. If user is logged in then remove the 10 minutes wait. (This mean the logged in user can use without any limit).
+4. If user is logged in then remove the 10 minutes wait. (This mean the logged in user can use without any limit). (Done)
 
 
 Logout functionality:
@@ -97,9 +97,9 @@ Logout functionality:
 2. So, when user click on Logout button (Available in the menu - ONLY if user is logged in). Then remove the local storage flag (that is set for the login)
 
 Notes:
-1. Please note that normally, if user go to login page and login then redirect them to homepage and remove the Login menu link.
+1. Please note that normally, if user go to login page and login then redirect them to homepage and remove the Login menu link. (Done)
 2. When user is logged in then display the logout button.
-3. If user is not logged in and click on history. Then redirect them to login page. And once logged in then re-redirect them to the history (instead of homepage).
+3. If user is not logged in and click on history. Then redirect them to login page. And once logged in then re-redirect them to the history (instead of homepage). (Done but in a different way)
 
 
 -->

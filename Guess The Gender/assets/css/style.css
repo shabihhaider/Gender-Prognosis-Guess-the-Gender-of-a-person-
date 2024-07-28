@@ -107,7 +107,7 @@ label {
     justify-content: center;
 }
 
-.btn {
+.btn, button {
     background-color: #283618;
     border: none;
     font-size: 1.1rem;
@@ -115,7 +115,7 @@ label {
     transition: 0.3s;
 }
 
-.btn:hover {
+.btn:hover, button:hover {
     background-color: #bc6c25;
     color: white;
     transform: scale(1.1);
@@ -135,4 +135,9 @@ tr {
     border: none;
     color: white;
     font: inherit;
+}
+
+button {
+    border-radius: 5px;
+    margin: 5px;
 }
