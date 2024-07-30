@@ -131,10 +131,22 @@ tr {
 }
 
 #delete-all {
-    background: none;
-    border: none;
     color: white;
     font: inherit;
+    font-weight: 900;
+    cursor: pointer;
+}
+
+.delete-individually {
+    cursor: pointer;
+    background-color: #bc6c25 !important;
+    color: #fdf0d5 !important;
+    font-size: 18px;
+    transition: 0.3s;
+}
+
+.delete-individually:hover {
+    background-color: #ca8c55 !important;
 }
 
 button {

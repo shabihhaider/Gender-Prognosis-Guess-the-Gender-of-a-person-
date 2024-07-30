@@ -1,6 +1,7 @@
 let popup = document.querySelector(".popup");
 let overlay = document.querySelector(".overlay");
 const deleteAll = document.getElementById("delete-all");
+const deleteIndividual = document.getElementsByClassName("delete-individually");
 let userLoggedIn = false;
 
 let limit = 0;
@@ -158,6 +159,11 @@ function showInHistory() {
       probabilityCell.textContent = user.probability;
       row.appendChild(probabilityCell);
 
+      const deleteCell = document.createElement("td");
+      deleteCell.textContent = `Delete`;
+      deleteCell.classList.add("delete-individually");
+      row.appendChild(deleteCell);
+
       tbody.append(row);
     });
   } else {
@@ -233,18 +239,39 @@ $(document).ready(function () {
 
 
 //When user click on this then remove all rows (localStorage clear)
-//deleteAll.addEventListener("click", clearStorage);
+deleteAll.addEventListener("click", clearStorage);
 
 function clearStorage() {
   localStorage.removeItem("users");
-  popup.innerHTML = `<p>All records cleared!`;
+  // popup.innerHTML = `<p>All records cleared!`;
 
-  //Diplay the message
-  overlay.classList.add("overlay-active");
-  popup.classList.add("popup-active");
+  // //Diplay the message
+  // overlay.classList.add("overlay-active");
+  // popup.classList.add("popup-active");
+
+  document.querySelector(".table tbody").innerHTML = `<tr>
+  <td colspan='6'>No users found</td>
+  </tr>`;
 
   //Debugging
   console.log(`All records cleared!`);
+
+  if (localStorage.getItem("users") == "" || localStorage.getItem("users") == null) {
+    alert(`All records are already cleared!`);
+  }
+  else {
+    alert(`All records cleared!`);
+  }
+  console.log(`All records cleared!`);
+}
+
+//When user click on individual row then remove only that row ()
+document.querySelectorAll(".delete-individual").forEach(button => {
+  button.addEventListener("click", clearStorageForIndividualRow);
+});
+
+function clearStorageForIndividualRow() {
+
 }
 
 /* SignUp and LogIn */
