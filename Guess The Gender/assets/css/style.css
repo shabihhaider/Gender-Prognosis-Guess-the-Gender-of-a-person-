@@ -67,6 +67,21 @@ label {
     transition: 0.3s;
 }
 
+.close-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-top: -10px;
+    padding: 5px;
+    font-size: 34px;
+    color: #283618;
+    cursor: pointer;
+}
+
+.close-btn:hover {
+    color: #c1121f;
+}
+
 .display-data {
     text-align: center;
     padding: 10px;

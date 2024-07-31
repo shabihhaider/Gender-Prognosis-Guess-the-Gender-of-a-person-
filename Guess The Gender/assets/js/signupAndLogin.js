@@ -6,6 +6,28 @@ const passwordInput = document.getElementById("password-input");
 const repeatPasswordInput = document.getElementById("repeat-password-input");
 const errorMessage = document.getElementById("error-message");
 
+// Add Logout button if user is already logged in
+if (localStorage.getItem("userLoggedIn") === "true") {
+  addLogoutButton();
+}
+
+function addLogoutButton() {
+  const nav = document.querySelector("nav");
+  
+  const logout = document.createElement("a");
+  logout.href = "#";
+  logout.id = "logout";
+  logout.textContent = "Logout";
+
+  nav.appendChild(logout);
+
+  logout.addEventListener("click", (e) => {
+    e.preventDefault();
+    localStorage.removeItem("userLoggedIn");
+    window.location.href = "login.html";
+  });
+}
+
 form.addEventListener("submit", (e) => {
   
   e.preventDefault(); // Prevent the form from submitting the traditional way
@@ -138,28 +160,6 @@ function getLoginFormErrors(email, password) {
 
   return errors;
 }
-
-
-function addLogoutButton() {
-  const nav = document.querySelector("nav");
-  let logout = document.querySelector("#logout");
-
-  if (!logout) {
-    logout = document.createElement("a");
-    logout.href = "#";
-    logout.id = "logout";
-    logout.textContent = "Logout";
-    nav.appendChild(logout);
-
-    logout.addEventListener("click", function (e) {
-      e.preventDefault();
-      localStorage.removeItem("userLoggedIn");
-      userLoggedIn = false;
-      window.location.href = "login.html";
-    });
-  }
-}
-
 
 const allInputs = [
   firstNameInput,
