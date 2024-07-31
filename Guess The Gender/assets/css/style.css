@@ -1,6 +1,6 @@
 body {
     margin: 0;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-family: 'Lucida Sans', sans-serif;
     background-color: #fefae0;
     overflow-x: hidden;
 }
@@ -41,6 +41,7 @@ h1 span {
 h1 {
     font-size: 50px;
     color: #283618;
+    font-weight: 600;
 }
 
 label {

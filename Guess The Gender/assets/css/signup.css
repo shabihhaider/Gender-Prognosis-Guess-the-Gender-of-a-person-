@@ -1,6 +1,7 @@
 body {
     margin: 0;
     padding: 0;
+    font-family: 'Lucida Sans', sans-serif;
     background-color: #fefae0;
     box-sizing: border-box;
     overflow-x: hidden;
@@ -30,6 +31,18 @@ body {
 
 .container-fluid {
     height: 100vh;
+}
+
+h1 span {
+    color:#bc6c25;
+    font-size: xx-large;
+    font-family: "Dancing Script";
+}
+
+h1 {
+    font-size: 50px;
+    color: #283618;
+    font-weight: 600;
 }
 
 /* Signup */
