@@ -137,6 +137,10 @@ tr {
     cursor: pointer;
 }
 
+#delete-all:hover {
+    background-color: #c1121f;
+}
+
 .delete-individually {
     cursor: pointer;
     background-color: #bc6c25 !important;
@@ -146,7 +150,7 @@ tr {
 }
 
 .delete-individually:hover {
-    background-color: #ca8c55 !important;
+    background-color: #c1121f !important;
 }
 
 button {

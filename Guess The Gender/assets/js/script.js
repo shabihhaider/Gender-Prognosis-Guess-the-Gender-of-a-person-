@@ -1,7 +1,7 @@
 let popup = document.querySelector(".popup");
 let overlay = document.querySelector(".overlay");
 const deleteAll = document.getElementById("delete-all");
-const deleteIndividual = document.getElementsByClassName("delete-individually");
+let deleteIndividual = document.getElementsByClassName("delete-individually");
 let userLoggedIn = false;
 
 let limit = 0;
@@ -18,9 +18,9 @@ function performSearch() {
   console.log("performSearch called");
 
   // @todo: you should get the flag from local storage for the limit.
-
+  
   let name = $("#name").val().trim();
-
+  
   // Check if name is empty
   if (name == "") {
     $(".popup").html(`
@@ -97,7 +97,7 @@ function setItem(fullName, gender, count, probability) {
 
     // Create a new user object
     const user = { fullName, gender, count, probability };
-
+    
     // Add the new user to the array
     users.push(user);
 
@@ -129,43 +129,34 @@ function resetSearchCount() {
 // Function to show history
 function showInHistory() {
   console.log("showInHistory called");
-
+  
   const users = JSON.parse(localStorage.getItem("users")) || [];
-  console.log(users);
   const tbody = document.querySelector(".table tbody");
 
+  //When user click on this then remove all rows (localStorage clear)
+  deleteAll.addEventListener("click", clearStorage);
+  
   if (users && users.length > 0) {
-    console.log("showInHistory called");
-    users.forEach((user, index) => {
-      const row = document.createElement("tr");
+    tbody.innerHTML = ''; // Clear the table body before adding rows
+        users.forEach((user, index) => { // 'index' is the index of the current user in the users array
+            const row = document.createElement("tr");
 
-      const indexCell = document.createElement("td");
-      indexCell.textContent = index + 1;
-      row.appendChild(indexCell);
+            row.innerHTML = `
+                <td>${index + 1}</td>
+                <td>${user.fullName}</td>
+                <td>${user.gender}</td>
+                <td>${user.count}</td>
+                <td>${user.probability}</td>
+                <td class="delete-individually">Delete</td>
+            `;
 
-      const nameCell = document.createElement("td");
-      nameCell.textContent = user.fullName;
-      row.appendChild(nameCell);
+            tbody.appendChild(row);
+        });
 
-      const genderCell = document.createElement("td");
-      genderCell.textContent = user.gender;
-      row.appendChild(genderCell);
-
-      const countCell = document.createElement("td");
-      countCell.textContent = user.count;
-      row.appendChild(countCell);
-
-      const probabilityCell = document.createElement("td");
-      probabilityCell.textContent = user.probability;
-      row.appendChild(probabilityCell);
-
-      const deleteCell = document.createElement("td");
-      deleteCell.textContent = `Delete`;
-      deleteCell.classList.add("delete-individually");
-      row.appendChild(deleteCell);
-
-      tbody.append(row);
-    });
+        // Add event listeners to the delete buttons after adding the rows
+        document.querySelectorAll(".delete-individually").forEach(button => {
+            button.addEventListener("click", clearStorageForIndividualRow);
+        });
   } else {
     console.log("showInHistory called");
     tbody.innerHTML = `<tr>
@@ -238,8 +229,7 @@ $(document).ready(function () {
 });
 
 
-//When user click on this then remove all rows (localStorage clear)
-deleteAll.addEventListener("click", clearStorage);
+
 
 function clearStorage() {
   localStorage.removeItem("users");
@@ -253,208 +243,53 @@ function clearStorage() {
   <td colspan='6'>No users found</td>
   </tr>`;
 
+  //Delay time
+  setTimeout(() => {
+    alert(`All records cleared!`);
+  }, 100);
+  
   //Debugging
   console.log(`All records cleared!`);
-
-  if (localStorage.getItem("users") == "" || localStorage.getItem("users") == null) {
-    alert(`All records are already cleared!`);
-  }
-  else {
-    alert(`All records cleared!`);
-  }
-  console.log(`All records cleared!`);
+  
 }
 
 //When user click on individual row then remove only that row ()
-document.querySelectorAll(".delete-individual").forEach(button => {
-  button.addEventListener("click", clearStorageForIndividualRow);
-});
+function clearStorageForIndividualRow(event) {
+  console.log("delete button clicked");
 
-function clearStorageForIndividualRow() {
+  // Find the row to be deleted
+  const row = event.target.closest("tr"); // Get the closest parent 'tr' element
+  const rowIndex = Array.from(row.parentElement.children).indexOf(row);
+  console.log(`Row index: ${rowIndex}`);
+  //Get the users from LocalStorage
+  let users = JSON.parse(localStorage.getItem("users")) || [];
 
-}
+  //Remove the user from the array
+  users.splice(rowIndex, 1);
+  console.log(`Users: ${users}`);
+  //Save the updated array back to LocalStorage
+  localStorage.setItem("users", JSON.stringify(users));
 
-/* SignUp and LogIn */
-const form = document.getElementById("form");
-const firstNameInput = document.getElementById("firstname-input");
-const emailInput = document.getElementById("email-input");
-const passwordInput = document.getElementById("password-input");
-const repeatPasswordInput = document.getElementById("repeat-password-input");
-const errorMessage = document.getElementById("error-message");
-
-form.addEventListener("submit", (e) => {
-  e.preventDefault(); // Prevent the form from submitting the traditional way
-  let errors = [];
-
-  let allUsersList = JSON.parse(localStorage.getItem("usersList")) || [];
-
-  if (firstNameInput) {
-    errors = getSignupFormErrors(
-      firstNameInput.value,
-      emailInput.value,
-      passwordInput.value,
-      repeatPasswordInput.value
-    );
-
-    if (errors.length === 0) {
-      const firstname = firstNameInput.value;
-      const email = emailInput.value;
-      const password = passwordInput.value;
-      const repeatPassword = repeatPasswordInput.value;
-
-      // Check if the user already exists
-      const userExists = allUsersList.some((user) => user.email === email); // allusersList.some returns true if any user exists with the same email
-
-      if (userExists) {
-        errors.push("User already exists. Please log in instead.");
-        errorMessage.innerText = errors.join(". ");
-      } else {
-        // Save all user data in an object
-        const userList = { firstname, email, password, repeatPassword };
-
-        allUsersList.push(userList);
-        localStorage.setItem("usersList", JSON.stringify(allUsersList));
-
-        console.log(`User details saved in local storage.`);
-
-        // Set user as logged in
-        localStorage.setItem("userLoggedIn", true);
-
-        // Redirect user to home page
-        window.location.href = "index.html";
-      }
-    } else {
-      errorMessage.innerText = errors.join(". ");
-    }
-  } else {
-    errors = getLoginFormErrors(emailInput.value, passwordInput.value);
-
-    if (errors.length === 0) {
-      const email = emailInput.value;
-      const password = passwordInput.value;
-
-      // Check if the user exists
-      const user = allUsersList.find(
-        (user) => user.email === email && user.password === password
-      );
-
-      if (user) {
-
-        if (localStorage.getItem("userLoggedIn") === "true") {
-          addLogoutButton();
-        }
-
-        // If user logs in, store flag in localStorage
-        localStorage.setItem("userLoggedIn", true);
-        userLoggedIn = true;
-
-        // Redirect user to home page
-        window.location.href = "index.html";
-
-      } else {
-        errors.push("User does not exist. Please sign up.");
-        errorMessage.innerText = errors.join(". ");
-      }
-    } else {
-      errorMessage.innerText = errors.join(". ");
-    }
+  // Remove the row from the table
+  row.remove();
+  console.log(`Row removed`);
+  // If no users left, update the table to show 'No users found'
+  if (users.length === 0) {
+    document.querySelector(".table tbody").innerHTML = `<tr>
+    <td colspan='6'>No users found</td>
+    </tr>`;
+  console.log(`No users found`);
   }
 
-  remove10MinsOrNot(userLoggedIn);
-});
+  //Delay time
+  setTimeout(() => {
+    alert(`Record deleted!`);
+  }, 100);
 
-function getSignupFormErrors(firstname, email, password, repeatPassword) {
-  let errors = [];
+  setTimeout(() => {
+    // Reload the page
+    location.reload();
+  }, 100);
 
-  // Clear previous error highlights
-  document.querySelectorAll(".highlight").forEach((element) => {
-    element.classList.remove("incorrect");
-  });
-
-  if (firstname === "" || firstname == null) {
-    errors.push(`Firstname is required`);
-    firstNameInput.parentElement.classList.add("incorrect");
-  }
-  if (email === "" || email == null) {
-    errors.push(`Email is required`);
-    emailInput.parentElement.classList.add("incorrect");
-  }
-  if (password === "" || password == null) {
-    errors.push(`Password is required`);
-    passwordInput.parentElement.classList.add("incorrect");
-  }
-
-  if (password.length < 8 && password !== "") {
-    errors.push(`Password must have at least 8 characters`);
-    passwordInput.parentElement.classList.add("incorrect");
-  }
-
-  if (password !== repeatPassword) {
-    errors.push(`Password does not match repeat password`);
-    passwordInput.parentElement.classList.add("incorrect");
-    repeatPasswordInput.parentElement.classList.add("incorrect");
-  }
-
-  return errors;
-}
-
-function getLoginFormErrors(email, password) {
-  let errors = [];
-
-  if (email === "" || email == null) {
-    errors.push(`Email is required`);
-    emailInput.parentElement.classList.add("incorrect");
-  }
-  if (password === "" || password == null) {
-    errors.push(`Password is required`);
-    passwordInput.parentElement.classList.add("incorrect");
-  }
-
-  return errors;
-}
-
-const allInputs = [
-  firstNameInput,
-  emailInput,
-  passwordInput,
-  repeatPasswordInput,
-].filter((input) => input != null);
-
-allInputs.forEach((input) => {
-  input.addEventListener("input", () => {
-    if (input.parentElement.classList.contains("incorrect")) {
-      input.parentElement.classList.remove("incorrect");
-      errorMessage.innerText = "";
-    }
-  });
-});
-
-
-// Function to handle 10 mins wait period
-function remove10MinsOrNot(isuserLoggedIn) {
-  if (isuserLoggedIn) {
-    // Now user has unlimited search limit
-  } else {
-    // User can only search 3 times then wait for 10 mins and then search again
-  }
-}
-
-function addLogoutButton() {
-  const nav = document.querySelector("nav");
-  let logout = document.querySelector("#logout");
-
-  if (!logout) {
-    logout = document.createElement("a");
-    logout.href = "#";
-    logout.id = "logout";
-    logout.textContent = "Logout";
-    nav.appendChild(logout);
-
-    logout.addEventListener("click", function (e) {
-      e.preventDefault();
-      localStorage.removeItem("userLoggedIn");
-      userLoggedIn = false;
-      window.location.href = "login.html";
-    });
-  }
+  console.log(`Alert Record deleted!`);
 }
