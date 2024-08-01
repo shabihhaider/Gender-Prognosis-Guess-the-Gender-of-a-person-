@@ -183,6 +183,11 @@ function showInHistory() {
 
           $('#example').DataTable(); // Initialize DataTable here
           
+          // Add print button event listener
+          $('#printButton').click(function() {
+            printTable();
+          });
+
           // Add event listeners to the delete buttons after adding the rows
           document.querySelectorAll(".delete-individually").forEach(button => {
             button.addEventListener("click", clearStorageForIndividualRow);
@@ -193,6 +198,17 @@ function showInHistory() {
         <td colspan='6'>No users found</td>
             </tr>`;
       }
+}
+
+// Function to print the table
+function printTable() {
+  let printContents = document.querySelector(".tab").innerHTML; // What data do you want to print
+  let originalContents = document.body.innerHTML; // Save the original content of the page
+
+  document.body.innerHTML = printContents; // Set the content to be printed
+  window.print();
+  document.body.innerHTML = originalContents; // Reset the content after printing
+  window.location.reload(); // Reload the original content after printing
 }
 
 function handleUserLogin() {
