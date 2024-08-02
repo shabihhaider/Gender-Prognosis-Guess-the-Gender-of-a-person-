@@ -7,7 +7,7 @@ let userLoggedIn = localStorage.getItem("userLoggedIn") === "true";
 
 let limit = 0;
 const countLimit = 3;
-const coolDownTime = 1 * 60 * 1000; //1 mins in milliseconds
+const coolDownTime = 10 * 60 * 1000; // 10 mins in milliseconds
 
 let fullName = "";
 let gender = "";
@@ -280,10 +280,10 @@ $(document).ready(function () {
         limit++;
         performSearch();
       } else {
-        console.log(`Search limit reached. Now wait for 1 minutes.`);
+        console.log(`Search limit reached. Now wait for 10 minutes.`);
 
         //If limit reached then show alert and disable the search button
-        alert(`Search limit reached. Now wait for 1 minutes.`);
+        alert(`Search limit reached. Now wait for 10 minutes.`);
         $(".btn").prop("disabled", true);
         $("#name").prop("disabled", true);
         setTimeout(resetSearchCount, coolDownTime);
