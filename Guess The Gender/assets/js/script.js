@@ -1,7 +1,6 @@
 
 let popup = document.querySelector(".popup");
 let overlay = document.querySelector(".overlay");
-const deleteAll = document.getElementById("delete-all");
 
 let userLoggedIn = localStorage.getItem("userLoggedIn") === "true";
 
@@ -162,7 +161,7 @@ function showInHistory() {
   const tbody = document.querySelector(".table tbody");
   
   //When user click on this then remove all rows (localStorage clear)
-  deleteAll.addEventListener("click", clearStorage);
+  $('#example thead').on('click', '#delete-all', clearStorage);
   
   if (users && users.length > 0) {
     tbody.innerHTML = ''; // Clear the table body before adding rows
@@ -328,12 +327,9 @@ function clearStorage() {
   document.querySelector(".table tbody").innerHTML = `<tr>
   <td colspan='6'>No users found</td>
   </tr>`;
-
-  //Display popup message
-  displayPopupMessage("All records cleared!");
 }
-  //Debugging
-  console.log(`All records cleared!`);
+//Debugging
+console.log(`All records cleared!`);
   
 }
 
