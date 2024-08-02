@@ -375,3 +375,10 @@ function clearStorageForIndividualRow(event) {
   }
   console.log(`Alert Record deleted!`);
 }
+
+if (userLoggedIn) {
+  document.addEventListener("DOMContentLoaded", function () {
+    // Remove the logIn button
+    $(".login").remove();
+  });
+}
