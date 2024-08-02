@@ -67,6 +67,7 @@ h1 {
     font-size: 2rem;
     font-weight: 900;
     text-transform: uppercase;
+    margin-top: 10px;
 }
 
 .wrapper form {
@@ -189,3 +190,9 @@ form div.incorrect input {
     color: #f06272;
     margin: 5px;
 }
+
+.no-loggedIn-no-history {
+    margin: 5px;
+    padding: 2px;
+    color: #f06272;
+}   

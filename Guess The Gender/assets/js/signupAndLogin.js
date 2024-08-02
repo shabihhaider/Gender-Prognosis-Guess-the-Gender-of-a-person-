@@ -6,6 +6,16 @@ const passwordInput = document.getElementById("password-input");
 const repeatPasswordInput = document.getElementById("repeat-password-input");
 const errorMessage = document.getElementById("error-message");
 
+let userLoggedIn = localStorage.getItem("userLoggedIn") === "true";
+
+$(".history").on("click", function (e) {
+  if (!userLoggedIn) {
+    e.preventDefault();
+    window.location.href = "login.html";  
+  }
+});
+
+
 // Add Logout button if user is already logged in
 if (localStorage.getItem("userLoggedIn") === "true") {
   addLogoutButton();

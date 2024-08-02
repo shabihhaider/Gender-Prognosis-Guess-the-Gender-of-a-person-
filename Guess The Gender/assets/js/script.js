@@ -240,14 +240,10 @@ function handleUserLogin() {
   if (userLogIn) {
     showInHistory();
   } else {
-    // Redirect to login page or handle accordingly
+    // If user is not logged in, show a message in the table body
     const tbody = document.querySelector(".table tbody");
     tbody.innerHTML = `<tr>
-    <td colspan='6'>Please LogIn to View History. <button>Click Here</button></td></tr>`;
-
-    $(".table tbody tr button").on("click", function () {
-      window.location.href = "login.html";
-    });
+    <td colspan='6'>Please LogIn to View History.</td></tr>`;
   }
 }
 
@@ -255,6 +251,14 @@ function handleUserLogin() {
 // Start the script
 $(document).ready(function () {
   userLoggedIn = localStorage.getItem("userLoggedIn") === "true";
+
+  // Handle "History" link click
+  $(".history").on("click", function (e) {
+    if (!userLoggedIn) {
+      e.preventDefault(); // Prevent default anchor behavior
+      window.location.href = "login.html"; // Redirect to login page
+    }
+  });
 
   $("#genderPredictionForm").on("submit", function (e) {
     e.preventDefault();
@@ -308,9 +312,8 @@ $(document).ready(function () {
 
   // Call handleUserLogin to check user login status and display history
   handleUserLogin();
+
 });
-
-
 
 
 function clearStorage() {
