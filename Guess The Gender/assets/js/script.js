@@ -181,11 +181,11 @@ function showInHistory() {
             tbody.appendChild(row);
           });
 
-          $('#example').DataTable(); // Initialize DataTable here
+          var table = $('#example').DataTable(); // Initialize DataTable here
           
           // Add print button event listener
           $('#printButton').click(function() {
-            printTable();
+            printTable(table);
           });
 
           // Add event listeners to the delete buttons after adding the rows
@@ -201,14 +201,40 @@ function showInHistory() {
 }
 
 // Function to print the table
-function printTable() {
-  let printContents = document.querySelector(".tab").innerHTML; // What data do you want to print
-  let originalContents = document.body.innerHTML; // Save the original content of the page
+function printTable(table) {
 
-  document.body.innerHTML = printContents; // Set the content to be printed
+  // Disable pagination
+  var settings = table.settings()[0]; // Get the DataTable settings
+  settings._iDisplayLength = settings.fnRecordsTotal(); // Set the page length to the total number of records
+  table.draw(); // Redraw the table means show all records
+
+  // Hide unwanted elements during printing
+  $('#delete-all').hide(); // Hide the 'delete all' button from the header
+  $('#delete-all-second').hide(); // Hide the 'delete all' button from the footer
+  $('.dataTables_paginate').hide(); // Hide the pagination buttons
+  $('.dataTables_info').hide(); // Hide the 'showing x to y of z entries' info
+  $('.dataTables_length').hide(); // Hide the 'showing entries (10, 25, ...)' length info
+  $('.dataTables_filter').hide(); // Hide the search box
+  $('.delete-individually').hide(); // Hide the 'delete' buttons
+  
+  // Print the table
   window.print();
-  document.body.innerHTML = originalContents; // Reset the content after printing
-  window.location.reload(); // Reload the original content after printing
+
+  // Enable pagination
+  settings._iDisplayLength = 10; // or whatever default length you want
+  table.draw();
+
+  // Show the hidden elements after printing
+  $('#delete-all').show();
+  $('#delete-all-second').show();
+  $('.dataTables_paginate').show();
+  $('.dataTables_info').show();
+  $('.dataTables_length').show();
+  $('.dataTables_filter').show();
+  $('.delete-individually').show();
+  
+  // Reload the page
+  location.reload();
 }
 
 function handleUserLogin() {
