@@ -146,14 +146,14 @@ tr {
     text-align: center;
 }
 
-.delete-all {
+#delete-all {
     color: white;
     font: inherit;
     font-weight: 900;
     cursor: pointer;
 }
 
-.delete-all:hover {
+#delete-all:hover {
     background-color: #c1121f;
 }
 

@@ -189,9 +189,8 @@ function showInHistory() {
           });
 
           // Add event listeners to the delete buttons after adding the rows
-          document.querySelectorAll(".delete-individually").forEach(button => {
-            button.addEventListener("click", clearStorageForIndividualRow);
-        });
+          $('#example tbody').on('click', '.delete-individually', clearStorageForIndividualRow);
+
       } else {
         console.log("showInHistory called");
         tbody.innerHTML = `<tr>
@@ -344,22 +343,30 @@ function clearStorageForIndividualRow(event) {
 
   if (confirm("You are deleting this record. Are you sure?")) {
 
-  // Find the row to be deleted
-  const row = event.target.closest("tr"); // Get the closest parent 'tr' element
-  const rowIndex = Array.from(row.parentElement.children).indexOf(row);
-  console.log(`Row index: ${rowIndex}`);
-  //Get the users from LocalStorage
-  let users = JSON.parse(localStorage.getItem("users")) || [];
+    // Get the DataTable instance
+    var table = $('#example').DataTable();
+
+    // Find the row to be deleted
+    const row = $(event.target).closest("tr"); // Get the closest parent 'tr' element
+
+    // Get the DataTable row index
+    const rowIndex = table.row(row).index();
+    console.log(`Row index: ${rowIndex}`);
+
+    //Get the users from LocalStorage
+    let users = JSON.parse(localStorage.getItem("users")) || [];
 
   //Remove the user from the array
-  users.splice(rowIndex, 1);
+  users.splice(rowIndex, 1); // Remove the user at the rowIndex and 1 is the number of elements to remove
   console.log(`Users: ${users}`);
+
   //Save the updated array back to LocalStorage
   localStorage.setItem("users", JSON.stringify(users));
 
-  // Remove the row from the table
-  row.remove();
+  // Remove the row from the DataTable
+    table.row(row).remove().draw(); // draw mean refresh the table
   console.log(`Row removed`);
+
   // If no users left, update the table to show 'No users found'
   if (users.length === 0) {
     document.querySelector(".table tbody").innerHTML = `<tr>
