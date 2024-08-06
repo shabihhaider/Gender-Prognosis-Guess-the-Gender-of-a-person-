@@ -149,7 +149,7 @@ tr {
 #delete-all {
     color: white;
     font: inherit;
-    font-weight: 900;
+    font-weight: 700;
     cursor: pointer;
 }
 
@@ -172,6 +172,18 @@ tr {
 button {
     border-radius: 5px;
     margin: 5px;
+}
+
+.download-individual {
+    background-color: #283618 !important;
+    color: #fdf0d5 !important;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.download-individual:hover {
+    background-color: #fdf0d5 !important;
+    color: #283618 !important;
 }
 
 @media print {

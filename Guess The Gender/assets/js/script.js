@@ -175,6 +175,7 @@ function showInHistory() {
                 <td>${user.count}</td>
                 <td>${user.probability}</td>
                 <td class="delete-individually">Delete</td>
+                <td class="download-individual">Download</td>
             `;
 
             tbody.appendChild(row);
@@ -187,13 +188,15 @@ function showInHistory() {
             printTable(table);
           });
 
+          $("#example tbody").on('click', '.download-individual', downloadIndividualRow);
+
           // Add event listeners to the delete buttons after adding the rows
           $('#example tbody').on('click', '.delete-individually', clearStorageForIndividualRow);
 
       } else {
         console.log("showInHistory called");
         tbody.innerHTML = `<tr>
-        <td colspan='6'>No users found</td>
+        <td colspan='7'>No users found</td>
             </tr>`;
       }
 }
@@ -209,12 +212,15 @@ function printTable(table) {
   // Hide unwanted elements during printing
   $('#delete-all').hide(); // Hide the 'delete all' button from the header
   $('#delete-all-second').hide(); // Hide the 'delete all' button from the footer
+  $('#print-head').hide(); // Hide the Print text from head
+  $('#print-foot').hide(); // Hide the Print text from foot
   $('.dataTables_paginate').hide(); // Hide the pagination buttons
   $('.dataTables_info').hide(); // Hide the 'showing x to y of z entries' info
   $('.dataTables_length').hide(); // Hide the 'showing entries (10, 25, ...)' length info
   $('.dataTables_filter').hide(); // Hide the search box
   $('.delete-individually').hide(); // Hide the 'delete' buttons
-  
+  $(".print-individual").hide(); // Hide Print Individual Button Record
+
   // Print the table
   window.print();
 
@@ -225,14 +231,52 @@ function printTable(table) {
   // Show the hidden elements after printing
   $('#delete-all').show();
   $('#delete-all-second').show();
+  $('#print-head').show();
+  $('#print-foot').show();
   $('.dataTables_paginate').show();
   $('.dataTables_info').show();
   $('.dataTables_length').show();
   $('.dataTables_filter').show();
   $('.delete-individually').show();
-  
+  $(".print-individual").show();
+
   // Reload the page
   location.reload();
+}
+
+// Function to print the Individual Row
+function downloadIndividualRow(event) {
+  console.log(`Enter print individual`);
+
+  // Get the DataTable instance
+  let dataTable = $('#example').DataTable();
+
+  // Find the row to be printed
+  const row = $(event.target).closest("tr"); // Get the closest parent 'tr' element
+
+  // Get the row data
+  const rowData = dataTable.row(row).data();
+  console.log(`Row data: ${rowData}`);
+
+  // Create a new jsPDF instance
+  const { jsPDF } = window.jspdf; // Extract the jsPDF class
+  // 'window.jspdf': This refers to the jspdf library that is available in the global window object
+  
+  const doc = new jsPDF(); // Create a new PDF document
+  // 'jsPDF': This is a constructor function provided by the jspdf library. It allows you to create new PDF documents.
+
+  // Customize the content of the PDF
+  doc.text(`Name: ${rowData[1]}`, 10, 10); // Assuming Name is in the second column
+  /*
+  10: The x-coordinate (horizontal position) where the text will start.
+  10: The y-coordinate (vertical position) where the text will start.
+  */
+  doc.text(`Gender: ${rowData[2]}`, 10, 20); // Assuming Gender is in the third column
+  doc.text(`Count: ${rowData[3]}`, 10, 30); // Assuming Count is in the fourth column
+  doc.text(`Probability: ${rowData[4]}`, 10, 40); // Assuming Probability is in the fifth column
+
+  // Save the PDF with the user's name
+  doc.save(`${rowData[1]}_record.pdf`); // [1] is the index of the Name column (the data will be stored as 'name_record.pdf')
 }
 
 function handleUserLogin() {
